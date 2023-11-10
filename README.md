@@ -4,7 +4,7 @@ This is a simple project developed using Django framework.
 Below are the steps to follow to setup this project locally on your machine
 * Clone the project locally on your machine using git clone command
  ``` 
-https://github.com/Shankar-1212/DjangoAuthentication
+git clone https://github.com/Shankar-1212/DjangoAuthentication.git
 ```
 * Create and activate a new virtual enviroment.
 [Virtual Environment](https://docs.python.org/3/library/venv.html)

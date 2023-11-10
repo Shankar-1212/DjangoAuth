@@ -1,4 +1,4 @@
-![image](https://github.com/Shankar-1212/DjangoAuthentication/assets/99824151/ae303fdf-33bb-4c6b-a087-623c533fc408)# DjangoAuthentication
+# DjangoAuthentication
 This is a simple project developed using Django framework.
 # Setup
 Below are the steps to follow to setup this project locally on your machine
@@ -21,5 +21,5 @@ python manage.py migrate
 python manage.py runserver
 ```
 # Screenshots
+![Screenshot 2023-11-10 at 22-40-42 User Authentication System](https://github.com/Shankar-1212/DjangoAuthentication/assets/99824151/e3c99928-539c-4780-918b-16114544c990)
 ![Screenshot 2023-11-10 at 22-37-25 User Authentication System](https://github.com/Shankar-1212/DjangoAuthentication/assets/99824151/f09e188a-2f0b-4238-877d-666239c781b2)
-![Screenshot 2023-11-10 at 22-38-37 User Authentication System](https://github.com/Shankar-1212/DjangoAuthentication/assets/99824151/7203bace-0b3c-40bf-a3c3-c8c70873c462)

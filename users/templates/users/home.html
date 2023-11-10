@@ -1,36 +1,57 @@
 {% extends 'users/base.html' %}
 
 {% block style %}
-    <style>
-        h1 {
-            text-align: center;
-        }
-        a {
-            display: inline-block;
-            background: #313030;
-            color: #FFF;
-            border: 0;
-            border-radius: 4px;
-            text-align: center;
-            padding: 20px 30px;
-            line-height: 1;
-            text-decoration: none;
-        }
-        a:hover {
-          background: #c7c5c5;
-          color: #313030;
-        }
-        .a2 {
-            margin-left: 1em;
-        }
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            border: 3px solid #313030;
-        }
-    </style>
+<style>
+   h1 {
+    text-align: center;
+}
+
+a {
+    display: inline-block;
+    background: #313030;
+    color: #FFF;
+    border: 0;
+    border-radius: 4px;
+    text-align: center;
+    padding: 20px 30px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+a:hover {
+    background: #c7c5c5;
+    color: #313030;
+}
+
+.a2 {
+    position: absolute;
+    top: 20%;
+    left: 52%; /* Change the left value to move it horizontally */
+    transform: translate(-50%, -50%);
+}
+
+.a1 {
+    position: absolute;
+    top: 20%;
+    left: 46%; /* Change the left value to move it horizontally */
+    transform: translate(-50%, -50%);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 3px solid #313030;
+}
+
+.profile-picture {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+
+</style>
 {% endblock style %}
 
 {% block content %}
@@ -38,19 +59,29 @@
     {% if user.is_authenticated %}
         <div class="alert alert-success" role="alert">
             <h1>Welcome {{ user.username }}!</h1>
+            <h2>Your Profile Information</h2>
+            <p>First Name: {{ user.first_name }}</p>
+            <p>Last Name: {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Date of Birth: {{ user.profile.birth_date }}</p>
+            <!-- Display additional fields if added to the user model -->
+            <p>Address: {{ user.profile.address_line1 }}, {{ user.profile.city }}, {{ user.profile.state }}, {{ user.profile.pincode }}</p>
+            <p>Profile Picture: {% if user.profile.profile_picture %}
+                <img class="profile-picture" src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
+                {% else %}
+                No profile picture uploaded
+                {% endif %}
+            </p>
+            <br>
+            <a href="{% url 'logout' %}">Logout</a>
         </div>
     {% else %}
         <div class="alert alert-success" role="alert">
-            <h1>Welcome!</h1>
+            <h1>Welcome to User Management System </h1>
+            <a class="a1" href="{% url 'signup' %}">Sign Up</a>
+            <a class="a2" href="{% url 'login' %}">Login</a>
         </div>
     {% endif %}
     <br>
-    <div class="center">
-        {% if user.is_authenticated %}
-            <a class="a2" href="{% url 'logout' %} ">Logout</a>
-        {% else %}
-            <a class="a1" href="{% url  'signup' %}">Sign Up</a>
-            <a class="a2" href="{% url 'login' %}">Login</a>
-        {% endif %}
-    </div>
+</div>
 {% endblock content %}

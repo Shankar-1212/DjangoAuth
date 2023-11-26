@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+COLOR_CHOICES = (
+    ('patient','Patient'),
+    ('doctor','Doctor'),
+)
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
@@ -13,7 +17,9 @@ class Profile(models.Model):
     city = models.CharField(max_length=50, blank=True)
     state = models.CharField(max_length=50, blank=True)
     pincode = models.CharField(max_length=10, blank=True)
-    
+    user_type = models.CharField(max_length=10, choices=COLOR_CHOICES)
+
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:

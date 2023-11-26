@@ -9,10 +9,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', user_views.home, name='home'),
+    path('doctor_home/', user_views.doctor_home, name='doctor_home'),
     path('signup/', user_views.signup, name='signup'),
-    path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name='login'),
+    path('login/',user_views.custom_login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name='logout'),
-    path('profiles/', views.view_profiles, name='profiles'),  # Example path to view profiles
 ]
 if settings.DEBUG:  
         urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  

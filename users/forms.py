@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class SignupForm(UserCreationForm):
+    user_type= forms.CharField(label='User type?', widget=forms.Select(choices=[['patient', 'Patient'], ['doctor', 'Doctor']]))
     first_name = forms.CharField(max_length=50, required=False, help_text='Optional.')
     last_name = forms.CharField(max_length=50, required=False, help_text='Optional.')
     email = forms.EmailField(max_length=120, help_text='Required. Enter a valid email address.')
@@ -15,4 +16,4 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'birth_date', 'profile_picture', 'address_line1', 'city', 'state', 'pincode', 'password1', 'password2')
+        fields = ('username', 'user_type', 'first_name', 'last_name', 'email', 'birth_date', 'profile_picture', 'address_line1', 'city', 'state', 'pincode', 'password1', 'password2')

@@ -60,7 +60,7 @@ a:hover {
     <br>
     {% if user.is_authenticated %}
         <div class="alert alert-success" role="alert">
-            <h1>Patient Dasboard</h1>
+            <h1>Doctor Dasboard</h1>
             <h2>Welcome {{ user.username }}!</h1>
             <h2>Your Profile Information</h2>
             <p>First Name: {{ user.first_name }}</p>
@@ -82,7 +82,7 @@ a:hover {
         </div>
     {% else %}
         <div class="alert alert-success" role="alert">
-            <h1>Welcome to Hospital Management System </h1>
+            <h1>Welcome to User Management System </h1>
             <a class="a1" href="{% url 'signup' %}">Sign Up</a>
             <a class="a2" href="{% url 'login' %}">Login</a>
         </div>

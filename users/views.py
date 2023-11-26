@@ -2,20 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from users.forms import SignupForm  # Update the path if necessary
 from users.models import Profile
-
-def view_profiles(request):
-    profiles = Profile.objects.all()  # Get all Profile instances
-    return render(request, 'profiles.html', {'profiles': profiles})
+from django.contrib.auth.forms import AuthenticationForm
 
 def home(request):
     return render(request, 'users/home.html')
-
-# views.py
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-from users.forms import SignupForm
-from users.models import Profile
-
+def doctor_home(request):
+    return render(request, 'users/doctor_home.html')
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST, request.FILES)
@@ -34,19 +26,54 @@ def signup(request):
             user.profile.city = form.cleaned_data.get('city')
             user.profile.state = form.cleaned_data.get('state')
             user.profile.pincode = form.cleaned_data.get('pincode')
+            user.profile.user_type = form.cleaned_data.get('user_type')
             user.profile.save()
 
             user.profile.birth_date = form.cleaned_data.get('birth_date')
             user.profile.save()
-            
             # Authenticate and login the user
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            print("User Type during login:", user.profile.user_type)
+            print("Authenticated User:", user)
             login(request, user)
-            return redirect('home')
+            print(request.session) 
+            if user.profile.user_type == 'patient':
+                return redirect('home')
+            else:
+                return redirect('doctor_home')
     else:
         form = SignupForm()
     
     context = {'form': form}
     return render(request, 'users/signup.html', context)
+
+def custom_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            # Authenticate user
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                # User is authenticated
+                login(request, user)
+
+                # Redirect to the dashboard based on user type
+                if user.profile.user_type == 'patient':
+                    return redirect('home')
+                elif user.profile.user_type == 'doctor':
+                    return redirect('doctor_home')
+            else:
+                # Authentication failed
+                form.add_error(None, 'Invalid username or password')
+
+    else:
+        form = AuthenticationForm()
+
+    context = {'form': form}
+    return render(request, 'users/login.html', context)

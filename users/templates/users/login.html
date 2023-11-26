@@ -5,9 +5,14 @@
   <div class="alert alert-success" role="alert">
     <h2 style="text-align: center;">Login</h2>
   </div>
-  <form method="post">
+  <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.errors }}
+      </div>
+    {% endif %}
     <button type="submit">Login</button>
   </form>
-{% endblock content%}
+{% endblock content %}
